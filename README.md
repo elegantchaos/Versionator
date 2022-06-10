@@ -16,9 +16,11 @@ The generated Swift API defines a `CurrentVersion` struct, with some static prop
 - `commit`: the current git commit
 - `git`: a git-style `describe` string such as "v1.0.1-23-ae34dec"
 
+The build number is derived from the git commit count on the current branch. This is a fairly standard technique but other approaches could obviously be taken.
+
 The git-style string is derived from the latest version tag on the current branch. 
 
-The pluging could be extended to parse this more fully, and add a `version` property which returns the semantic version as a struct. 
+Currently I'm just returning it verbatim, but the plugin could be extended to parse this more fully. It could then returns the semantic version as a struct split into components.
 
 
 ## Info.plist
