@@ -25,5 +25,9 @@ The pluging could be extended to parse this more fully, and add a `version` prop
 
 As an experiment, this plugin also generates an Info.plist, which gets bundled into the package resources.
 
-This can then be accessed with `Bundle.module.info
+This can then be accessed with `Bundle.module`.
+
+I was hoping that `Bundle.module.infoDictionary` would be populated with the content of the Info.plist file, but apparently not.
+
+However, you can fish out the URL and load it yourself easily enough.
 
