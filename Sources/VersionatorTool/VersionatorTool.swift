@@ -8,9 +8,6 @@ import Runner
 
 @main struct VersionatorTool {
     static func main() {
-        print("Running versionator")
-        print(CommandLine.arguments)
-
         guard CommandLine.arguments.count == 4 else {
             fatalError("wrong arguments passed to tool \(CommandLine.arguments)")
         }
@@ -59,12 +56,13 @@ import Runner
 
         let infoPath = CommandLine.arguments[3]
         let info = [
-            "build": buildNumber,
-            "commit": commit,
-            "git": gitVersion
+            "CFBundleVersion": buildNumber,
+            "Commit": commit,
+            "CFBundleShortVersionString": gitVersion,
+            "CFBundleInfoDictionaryVersion": 6.0
         ] as NSDictionary
         
-        let infoData = try? PropertyListSerialization.data(fromPropertyList: info, format: .xml, options: 0)
+        let infoData = try? PropertyListSerialization.data(fromPropertyList: info, format: .binary, options: 0)
         let infoURL = URL(fileURLWithPath: infoPath)
         try? infoData?.write(to: infoURL)
 
