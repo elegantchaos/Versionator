@@ -33,7 +33,7 @@ I was hoping that `Bundle.module.infoDictionary` would be populated with the con
 
 However, you can fish out the URL and load it yourself easily enough.
 
-This seems to produce a cyclic-dependency warning in Xcode, due to the fact that the executable uses the bundle, and the bundle contains the Info.plist, but the Info.plist is built during the build of the executable.
+This seems to produce a cyclic-dependency warning in Xcode, due to the fact that the client executable uses the bundle, and the bundle contains the Info.plist, but the Info.plist is built during the build of the client executable.
 
 This might be fixed by making this a prebuild plugin, which is what I initially tried to do.
 
