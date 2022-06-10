@@ -33,8 +33,13 @@ I was hoping that `Bundle.module.infoDictionary` would be populated with the con
 
 However, you can fish out the URL and load it yourself easily enough.
 
+This seems to produce a cyclic-dependency warning in Xcode, due to the fact that the executable uses the bundle, and the bundle contains the Info.plist, but the Info.plist is built during the build of the executable.
 
-# Info.plist Thoughts
+This might be fixed by making this a prebuild plugin, which is what I initially tried to do.
+
+Unfortunately prebuild plugins seem to have a limitation in that the tool they run can only be a binaryTarget - ie a precompiled binary that's been commited/uploaded elsewhere. That's a bit of a rubbish limitation right now for such a simple plugin, and it really cramps one's style whilst developing the plugin, so I switched to using a build plugin instead. Hopefully this limitation will be fixed.   
+
+## Info.plist Thoughts
 
 My current Xcode workflow for app development involves pulling in some standard tools as an SPM package, and building/running them in a build phase, in order to make a Info.h file with C-style constant definitions in it, which I then set as the INFOPLIST_PREFIX_HEADER in Xcode.
  
