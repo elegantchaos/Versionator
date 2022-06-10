@@ -7,6 +7,7 @@ This experiments with a couple of approaches:
 - generating a swift file which then gets built into the package
 - generating an info.plist file which gets embedded as a package resource
 
+See https://github.com/elegantchaos/VersionatorTest for an example command line tool which uses the plugin.
 
 ## Swift API
 
