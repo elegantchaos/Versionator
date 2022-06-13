@@ -28,17 +28,13 @@ Currently I'm just returning it verbatim, but the plugin could be extended to pa
 
 As an experiment, this plugin also generates an Info.plist, which gets bundled into the package resources.
 
-This can then be accessed with `Bundle.module`.
+This can then be accessed with `Bundle.module.infoDictionary`.
 
-I was hoping that `Bundle.module.infoDictionary` would be populated with the content of the Info.plist file, but apparently not.
+**Note**: Outputting resources from a build tool like this seems to produce a cyclic-dependency warning in Xcode, due to the fact that the client executable uses the bundle, and the bundle contains the Info.plist, but Xcode seems to think that the Info.plist depends on the executable target.
 
-However, you can fish out the URL and load it yourself easily enough.
+I'm not sure if this is a bug with the Xcode integration. Building with SPM from the command line doesn't produce the same errors - which might be because they aren't there, or might be a failure to report them.
 
-This seems to produce a cyclic-dependency warning in Xcode, due to the fact that the client executable uses the bundle, and the bundle contains the Info.plist, but the Info.plist is built during the build of the client executable.
-
-This might be fixed by making this a prebuild plugin, which is what I initially tried to do.
-
-Unfortunately prebuild plugins seem to have a limitation in that the tool they run can only be a binaryTarget - ie a precompiled binary that's been commited/uploaded elsewhere. That's a bit of a rubbish limitation right now for such a simple plugin, and it really cramps one's style whilst developing the plugin, so I switched to using a build plugin instead. Hopefully this limitation will be fixed.   
+I did wonder if this would be fixed by making the plugin _prebuild_ instead of _build_. That is what I initially tried to do, but unfortunately prebuild plugins seem to have a limitation in that the tool they run can only be a binaryTarget - ie a precompiled binary that's been commited/uploaded elsewhere. That's a bit of a rubbish limitation right now for such a simple plugin, and it really cramps one's style whilst developing the plugin, so I switched to using a build plugin instead. Hopefully this limitation will be fixed, and might in turn fix the Xcode problem.   
 
 ## Info.plist Thoughts
 
@@ -53,4 +49,6 @@ I like the idea of injecting values into the Info.plist, but I expect you'd want
 What I'm thinking of there is possibly having an Info-builder tool, which takes its input from multiple source files (eg "Blah.info"). These could be in JSON or Plist format, and be merged together to form the final Info.plist.
 
 This version number plugin could then generate one of those `.info` files, with the version items in it; which would get merged in alongside everything else.
+
+**Update**: see [Infomatic Plugin](https://github.com/elegantchaos/InfomaticPlugin) for a crude version of this.
  
