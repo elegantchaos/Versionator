@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.6
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 //  Created by Sam Deane on 09/06/22.
@@ -23,7 +23,7 @@ let package = Package(
     ],
     
     dependencies: [
-        .package(url: "https://github.com/elegantchaos/Runner.git", from: "1.0.0")
+        .package(url: "https://github.com/elegantchaos/Runner.git", from: "1.3.1")
     ], 
     
     targets: [
