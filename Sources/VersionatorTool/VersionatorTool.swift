@@ -16,16 +16,14 @@ import Runner
             exit(1)
         }
 
-        print(all)
-        print("[error]: test")
-        print("[warning]: test")
-        print("[note]: test")
 //        let options = Set(all.filter({ $0.starts(with: "--") }))
 
         let root = args[1]
         chdir(root)
         
         let runner = Runner(command: "git")
+        
+        // build number is derived from the commit count on the current branch
         let buildNumber: String
         do {
             let result = try runner.sync(arguments: ["rev-list", "--count", "HEAD"])
@@ -34,27 +32,28 @@ import Runner
             buildNumber = "0"
         }
 
-        let commit: String
-        do {
-            let result = try runner.sync(arguments: ["rev-list", "--max-count", "1", "HEAD"])
-            commit = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
-        } catch {
-            commit = ""
-        }
-
         let gitVersion: String
         do {
-            let result = try runner.sync(arguments: ["describe", "--always"])
+            let result = try runner.sync(arguments: ["describe", "--long", "--tags", "--always"])
             gitVersion = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
         } catch {
             gitVersion = ""
         }
 
+        let items = gitVersion.split(separator: "-")
+        let tag = items.first ?? ""
+        var version = tag
+        if version.first == "v" { version.removeFirst() }
+        let commit = items.count == 3 ? items[2] : ""
+        
         let generatedSwift = """
         public struct CurrentVersion {
-            static let build: Int = \(buildNumber)
-            static let commit: String = "\(commit)"
-            static let git: String = "\(gitVersion)"
+            static let string = "\(version)"
+            static let build = \(buildNumber)
+            static let commit = "\(commit)"
+            static let git = "\(gitVersion)"
+            static let tag = "\(tag)"
+            static let full = "\(version) (\(buildNumber))"
         }
         """
         
