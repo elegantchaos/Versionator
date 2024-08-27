@@ -14,18 +14,17 @@ import Runner
       let name = URL(fileURLWithPath: args[0]).lastPathComponent
       print(
         """
-          Usage: \(name) <options> <input-path> <output-path> {<info-path>}
+          Usage: \(name) <input-path> <output-path> {<info-path>} {<header-path>}
           
           Calculates the "version" of the git repo at <input-path>, 
           and writes a generated Swift file to <output-path>.
 
-          Optionally also writes an Info.plist file to <info-path>. 
+          Optionally also writes an generated plist file to <info-path>, and
+          a C-style header file to <header-path>.
         """)
 
       exit(1)
     }
-
-    //        let options = Set(all.filter({ $0.starts(with: "--") }))
 
     let root = args[1]
     chdir(root)
@@ -60,6 +59,9 @@ import Runner
     if args.count > 3 {
       writePlist(to: args[3], buildNumber: buildNumber, commit: commit, gitVersion: gitVersion)
     }
+    if args.count > 4 {
+      writeHeader(to: args[4], version: version, commit: commit, tag: tag, buildNumber: buildNumber, gitVersion: gitVersion)
+    }
 
   }
 
@@ -84,6 +86,24 @@ import Runner
     try? data?.write(to: outputURL)
   }
 
+  static func writeHeader(to path: String, version: String.SubSequence, commit: String.SubSequence, tag: String.SubSequence, buildNumber: String, gitVersion: String) {
+    let generatedHeader = """
+      #define BUILD \(buildNumber)
+      #define CURRENT_PROJECT_VERSION \(buildNumber)
+      #define COMMIT \(commit)
+      #define GIT_VERSION "\(gitVersion)"
+      #define GIT_TAG "\(tag)"
+      """
+    let data = generatedHeader.data(using: .utf8)
+    var outputURL = URL(fileURLWithPath: path)
+    if outputURL.pathExtension == "" {
+      outputURL = outputURL.appendingPathExtension("h")
+    }
+    try? FileManager.default.createDirectory(at: outputURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+    try? data?.write(to: outputURL)
+  }
+
+  /// Write out the generate Plist
   static func writePlist(to infoPath: String, buildNumber: String, commit: String.SubSequence, gitVersion: String) {
     let info =
       [
