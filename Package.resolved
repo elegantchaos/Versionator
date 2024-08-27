@@ -1,30 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "matchable",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/elegantchaos/Matchable.git",
-      "state" : {
-        "revision" : "d53e807009960aafbd54f6229c2542f906628b38",
-        "version" : "1.0.7"
-      }
-    },
-    {
       "identity" : "runner",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/elegantchaos/Runner.git",
       "state" : {
-        "revision" : "65420eb4e534a58c8fb1bf18e344bc86edb42c65",
-        "version" : "1.3.2"
-      }
-    },
-    {
-      "identity" : "xctestextensions",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/elegantchaos/XCTestExtensions.git",
-      "state" : {
-        "revision" : "c1cec43d4ca0b657323080b90a840b675e8af638",
-        "version" : "1.4.9"
+        "revision" : "d717871540918b9665d8862cc953fd1832db8b01",
+        "version" : "2.0.1"
       }
     }
   ],
