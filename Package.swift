@@ -8,39 +8,39 @@
 import PackageDescription
 
 let package = Package(
-    name: "Versionator",
-    platforms: [
-        .macOS(.v10_13)
-    ],
+  name: "Versionator",
+  platforms: [
+    .macOS(.v12)
+  ],
 
-    products: [
-        .plugin(
-            name: "VersionatorPlugin",
-            targets: [
-                "VersionatorPlugin"
-            ]
-        )
-    ],
-    
-    dependencies: [
-        .package(url: "https://github.com/elegantchaos/Runner.git", from: "1.3.1")
-    ], 
-    
-    targets: [
-        .plugin(
-            name: "VersionatorPlugin",
-            capability: .buildTool(),
-            dependencies: [
-                "VersionatorTool"
-            ]
-        ),
+  products: [
+    .plugin(
+      name: "VersionatorPlugin",
+      targets: [
+        "VersionatorPlugin"
+      ]
+    )
+  ],
 
-        .executableTarget(
-            name: "VersionatorTool",
-            dependencies: [
-                .product(name: "Runner", package: "Runner")
-            ]
-        ),
-        
-    ]
+  dependencies: [
+    .package(url: "https://github.com/elegantchaos/Runner.git", from: "2.0.1")
+  ],
+
+  targets: [
+    .plugin(
+      name: "VersionatorPlugin",
+      capability: .buildTool(),
+      dependencies: [
+        "VersionatorTool"
+      ]
+    ),
+
+    .executableTarget(
+      name: "VersionatorTool",
+      dependencies: [
+        .product(name: "Runner", package: "Runner")
+      ]
+    ),
+
+  ]
 )
