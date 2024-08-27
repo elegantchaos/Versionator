@@ -12,7 +12,16 @@ import Runner
     let args = all.filter({ !$0.starts(with: "--") })
     guard args.count > 2 else {
       let name = URL(fileURLWithPath: args[0]).lastPathComponent
-      print("\n\nUsage: \(name) <options> <root> <path> {<infoPath>}")
+      print(
+        """
+          Usage: \(name) <options> <input-path> <output-path> {<info-path>}
+          
+          Calculates the "version" of the git repo at <input-path>, 
+          and writes a generated Swift file to <output-path>.
+
+          Optionally also writes an Info.plist file to <info-path>. 
+        """)
+
       exit(1)
     }
 
