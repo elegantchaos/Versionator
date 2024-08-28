@@ -23,7 +23,7 @@ let package = Package(
   ],
 
   dependencies: [
-    .package(url: "https://github.com/elegantchaos/Runner.git", from: "2.0.1")
+    .package(url: "https://github.com/elegantchaos/Runner.git", from: "2.0.3")
   ],
 
   targets: [
@@ -50,6 +50,7 @@ let package = Package(
       dependencies: [
         "VersionatorTool",
         "VersionatorUtils",
+        .product(name: "Runner", package: "Runner"),
       ]
     ),
 

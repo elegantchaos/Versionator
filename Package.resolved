@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/elegantchaos/Runner.git",
       "state" : {
-        "revision" : "d717871540918b9665d8862cc953fd1832db8b01",
-        "version" : "2.0.1"
+        "revision" : "2192b264172e58359662d07d290a94fc6b154c99",
+        "version" : "2.0.3"
       }
     }
   ],
