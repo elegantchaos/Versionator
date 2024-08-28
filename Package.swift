@@ -27,6 +27,8 @@ let package = Package(
   ],
 
   targets: [
+    .target(name: "VersionatorUtils"),
+
     .plugin(
       name: "VersionatorPlugin",
       capability: .buildTool(),
@@ -38,7 +40,16 @@ let package = Package(
     .executableTarget(
       name: "VersionatorTool",
       dependencies: [
-        .product(name: "Runner", package: "Runner")
+        "VersionatorUtils",
+        .product(name: "Runner", package: "Runner"),
+      ]
+    ),
+
+    .testTarget(
+      name: "VersionatorTests",
+      dependencies: [
+        "VersionatorTool",
+        "VersionatorUtils",
       ]
     ),
 

@@ -5,6 +5,7 @@
 
 import Foundation
 import Runner
+import VersionatorUtils
 
 @main struct VersionatorTool {
   static func main() async {
