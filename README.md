@@ -1,6 +1,8 @@
 # Versionator
 
-This is a little proof-of-concept plugin which gathers version information and embeds it into the package/executable, in a way that allows it to be retrieved at runtime.
+** WORK IN PROGRESS: this is currently being updated for Swift 6 **
+
+This plugin gathers version information and embeds it into the package/executable, in a way that allows it to be retrieved at runtime.
 
 This experiments with a couple of approaches:
 

@@ -10,7 +10,6 @@
 				"-diagnostic-style=llvm"
 			],
 			"env": {},
-			"cwd": "/Users/sam/Developer/Projects/Versionator",
 			"disableTaskQueue": true,
 			"showBuildStatus": "swiftStatus",
 			"group": {
@@ -20,6 +19,24 @@
 			"problemMatcher": [],
 			"label": "swift: Build All",
 			"detail": "swift build --build-tests -Xswiftc -diagnostic-style=llvm"
+		},
+		{
+			"type": "swift",
+			"args": [
+				"test",
+				"-Xswiftc",
+				"-diagnostic-style=llvm"
+			],
+			"env": {},
+			"disableTaskQueue": true,
+			"showBuildStatus": "swiftStatus",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "swift: Test All",
+			"detail": "swift test -Xswiftc -diagnostic-style=llvm"
 		}
 	]
 }
