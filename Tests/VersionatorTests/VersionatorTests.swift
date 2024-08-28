@@ -11,7 +11,17 @@ import VersionatorUtils
   try await test.inTempFolder { folder in
     let url = test.urlForTool("VersionatorTool")
     let runner = Runner(for: url)
-    let output = try runner.run(arguments: ["./", folder.appending(component: "Version.swift").path])
-    print(await String(output.stdout))
+    let files = ["Version.swift", "Version.plist", "Version.h"]
+    var args = ["--verbose", "./"]
+
+    let paths = files.map { folder.appending(component: $0).path }
+    args.append(contentsOf: paths)
+    let output = await String(
+      try runner.run(arguments: args)
+        .stdout)
+
+    #expect(output.contains("Generated Version.swift"))
+    #expect(output.contains("Generated Version.h"))
+    #expect(output.contains("Generated Version.plist"))
   }
 }
