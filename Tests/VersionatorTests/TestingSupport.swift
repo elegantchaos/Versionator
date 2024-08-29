@@ -1,30 +1,29 @@
 import Foundation
 import Testing
 
-/// Cache of the test bundle URL, since
-/// we need to access it multiple times
-/// and it's not going to change.
-private var cachedURL: URL? = nil
+/// Cache of the test bundle URL.
+private let cachedBundleURL: URL = initCachedURL()
+
+/// Work out the bundle URL.
+/// - Returns: The URL of the test bundle.
+///
+/// We look for the test bundle by looking at the command line arguments.
+/// We assume that the test bundle is the first argument that contains ".xctest".
+private func initCachedURL() -> URL {
+  for arg in ProcessInfo.processInfo.arguments {
+    if arg.contains(".xctest") {
+      if let path = arg.split(separator: ".xctest").first {
+        return URL(fileURLWithPath: String(path))
+      }
+    }
+  }
+
+  fatalError("Could not find the test bundle path")
+}
 
 extension Test {
   /// URL of the test bundle.
-  var bundleURL: URL {
-    if let cachedURL {
-      return cachedURL
-    }
-
-    for arg in ProcessInfo.processInfo.arguments {
-      if arg.contains(".xctest") {
-        if let path = arg.split(separator: ".xctest").first {
-          let url = URL(fileURLWithPath: String(path))
-          cachedURL = url
-          return url
-        }
-      }
-    }
-
-    fatalError("Could not find the test bundle path")
-  }
+  var bundleURL: URL { cachedBundleURL }
 
   /// URL of the build folder that contains the test bundle.
   /// It may also contain other build products that we want to access,

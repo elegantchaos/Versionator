@@ -9,29 +9,30 @@ import PackagePlugin
 @main struct VersionatorPlugin: BuildToolPlugin {
   func createBuildCommands(context: PackagePlugin.PluginContext, target: PackagePlugin.Target) async throws -> [PackagePlugin.Command] {
     // generate the swift and header files
-    var filesToGenerate = ["Version.generated.swift", "Info.plisth"]
+    var filesToGenerate = ["Version.generated.swift"]
     if target.hasResources {
-      // if the target has resources, also generate an Info.plist
-      filesToGenerate.append("Info.plist")
+      // if the target has resources, also generate an Info.plist, and some C-style header definitions that could be used as a plist include.
+      // (note, we don't use .h for the header file as SPM will treat it as code, and complain that it doesn't support mixed-language projects).
+      filesToGenerate.append(contentsOf: ["Info.plist", "Info.plisth"])
     }
 
     // calculate the paths to the generated files
     // we delete any existing versions to ensure that they're always regenerated
-    let generatedFolderPath = context.pluginWorkDirectory.appending("GeneratedSources")
-    var outputFiles: [Path] = []
+    let generatedFolderPath = context.pluginWorkDirectoryURL.appending(path: "GeneratedSources")
+    var outputFiles: [URL] = []
     for file in filesToGenerate {
-      let path = generatedFolderPath.appending(file)
-      outputFiles.append(path)
-      try? FileManager.default.removeItem(atPath: path.string)
+      let url = generatedFolderPath.appending(path: file)
+      outputFiles.append(url)
+      try? FileManager.default.removeItem(atPath: url.path)
     }
 
-    var arguments = [context.package.directory]
-    arguments.append(contentsOf: outputFiles)
+    var arguments = [context.package.directoryURL.path]
+    arguments.append(contentsOf: outputFiles.map { $0.path })
 
     return [
       .buildCommand(
         displayName: "Calculating Version",
-        executable: try context.tool(named: "VersionatorTool").path,
+        executable: try context.tool(named: "VersionatorTool").url,
         arguments: arguments,
         outputFiles: outputFiles
       )
@@ -39,19 +40,10 @@ import PackagePlugin
   }
 }
 
-let nonResourceExtensions = ["swift", "h", "c", "m", "cp", "cpp", "hp", "hpp"]
-
 extension PackagePlugin.Target {
-
   /// Does the target include resources?
-  /// Ideally we'd just be able to access the `resources:` information for the target,
-  /// but is seems not to be possible currently. As an approximation, we check to see
-  /// if the source files contains anything with a non-source extension.
   var hasResources: Bool {
     guard let sourceTarget = self as? SourceModuleTarget else { return false }
-    return sourceTarget.sourceFiles.contains { file in
-      guard let ext = file.path.extension else { return false }
-      return !nonResourceExtensions.contains(ext)
-    }
+    return sourceTarget.sourceFiles.contains { file in file.type == .resource }
   }
 }
