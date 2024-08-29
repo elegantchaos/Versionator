@@ -9,7 +9,7 @@ import PackagePlugin
 @main struct VersionatorPlugin: BuildToolPlugin {
   func createBuildCommands(context: PackagePlugin.PluginContext, target: PackagePlugin.Target) async throws -> [PackagePlugin.Command] {
     // generate the swift and header files
-    var filesToGenerate = ["Version.generated.swift", "Version.generated.h"]
+    var filesToGenerate = ["Version.generated.swift", "Info.plisth"]
     if target.hasResources {
       // if the target has resources, also generate an Info.plist
       filesToGenerate.append("Info.plist")

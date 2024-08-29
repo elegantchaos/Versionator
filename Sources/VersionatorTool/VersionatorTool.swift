@@ -65,7 +65,7 @@ import VersionatorUtils
     for arg in args.dropFirst(2) {
       let url = URL(fileURLWithPath: arg)
       switch url.pathExtension {
-      case "h": writeHeader(to: url, version: version, commit: commit, tag: tag, buildNumber: buildNumber, gitVersion: gitVersion, verbose: verbose)
+      case "h", "plisth": writeHeader(to: url, version: version, commit: commit, tag: tag, buildNumber: buildNumber, gitVersion: gitVersion, verbose: verbose)
       case "swift": writeSwift(to: url, version: version, commit: commit, tag: tag, buildNumber: buildNumber, gitVersion: gitVersion, verbose: verbose)
       case "plist": writePlist(to: url, buildNumber: buildNumber, commit: commit, gitVersion: gitVersion, verbose: verbose)
       default: print("Unknown file type '\(url.pathExtension)'")
