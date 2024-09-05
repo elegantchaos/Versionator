@@ -17,7 +17,7 @@ import VersionatorUtils
     let paths = files.map { folder.appending(component: $0).path }
     args.append(contentsOf: paths)
     let output = await String(
-      try runner.run(args)
+      runner.run(args)
         .stdout)
 
     #expect(output.contains("Generated Version.swift"))

@@ -40,21 +40,12 @@ import VersionatorUtils
 
     // build number is derived from the commit count on the current branch
     let buildNumber: String
-    do {
-      let result = try runner.run(["rev-list", "--count", "HEAD"])
-      buildNumber = await String(result.stdout).trimmingCharacters(in: .whitespacesAndNewlines)
-
-    } catch {
-      buildNumber = "unknown"
-    }
+    let buildResult = runner.run(["rev-list", "--count", "HEAD"])
+    buildNumber = await String(buildResult.stdout).trimmingCharacters(in: .whitespacesAndNewlines)
 
     let gitVersion: String
-    do {
-      let result = try runner.run(["describe", "--long", "--tags", "--always"])
-      gitVersion = await String(result.stdout).trimmingCharacters(in: .whitespacesAndNewlines)
-    } catch {
-      gitVersion = ""
-    }
+    let versionResult = runner.run(["describe", "--long", "--tags", "--always"])
+    gitVersion = await String(versionResult.stdout).trimmingCharacters(in: .whitespacesAndNewlines)
 
     let items = gitVersion.split(separator: "-")
     let tag = items.first ?? ""
