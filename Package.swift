@@ -23,7 +23,7 @@ let package = Package(
   ],
 
   dependencies: [
-    .package(url: "https://github.com/elegantchaos/Runner.git", from: "2.1.0")
+    .package(url: "https://github.com/elegantchaos/Runner.git", from: "2.1.3")
   ],
 
   targets: [
