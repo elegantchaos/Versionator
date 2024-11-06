@@ -3,7 +3,7 @@
 public struct VersionatorVersion {
   static let string = "1.0.0"
   static let build = 4
-  static let commit = "g70f8f9a"
+  static let commit = "70f8f9a"
   static let git = "v1.0.0-0-g70f8f9a"
   static let tag = "v1.0.0"
   static let full = "1.0.0 (4)"

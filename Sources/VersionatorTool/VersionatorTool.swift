@@ -51,7 +51,8 @@ import VersionatorUtils
     let tag = items.first ?? ""
     var version = tag
     if version.first == "v" { version.removeFirst() }
-    let commit = items.count == 3 ? items[2] : ""
+    var commit = items.count == 3 ? items[2] : ""
+    if commit.first == "g" { commit.removeFirst() }
 
     for arg in args.dropFirst(2) {
       let url = URL(fileURLWithPath: arg)
