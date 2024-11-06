@@ -51,6 +51,10 @@ let package = Package(
         "VersionatorTool",
         "VersionatorUtils",
         .product(name: "Runner", package: "Runner"),
+      ],
+      resources: [
+        .copy("Resources/Example.git"),
+        .copy("Resources/Example.out"),
       ]
     ),
 
