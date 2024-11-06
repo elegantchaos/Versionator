@@ -19,6 +19,7 @@ import VersionatorUtils
     try fm.moveItem(at: repoFolder.appending(path: "git"), to: repoFolder.appending(path: ".git"))
 
     // run the tool over the repo
+    // (note that both .h and .plisth extensions should generate C-style header files)
     let url = test.urlForTool("VersionatorTool")
     let runner = Runner(for: url, cwd: repoFolder)
     let files = ["Version.swift", "Version.plist", "Version.h", "Info.plisth"]
