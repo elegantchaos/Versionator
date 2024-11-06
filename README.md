@@ -78,8 +78,11 @@ For an alternative approach to generating an Info.plist, see also [Infomatic Plu
 
 ## Xcode Issues?
 
-**Note**: Outputting resources from a build tool like this seems to produce a cyclic-dependency warning in previous versions of Xcode, due to the fact that the client executable uses the bundle, and the bundle contains the Info.plist, but Xcode seems to think that the Info.plist depends on the executable target.
+**Note**: Outputting Info.plist resource from a build tool like this seems to produce an error in Xcode:
 
-I'm not sure if this is a bug with the Xcode integration. Building with SPM from the command line doesn't produce the same errors - which might be because they aren't there, or might be a failure to report them.
+```
+note: Run script build phase 'Calculating Version' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'VersionatorTest_VersionatorTestWithResources' from project 'VersionatorTest')
+warning: duplicate output file '/Users/sam/Library/Developer/Xcode/DerivedData/VersionatorTest-ejghobxgggddhabfxovpkctjsdcf/Build/Products/Debug-iphoneos/VersionatorTest_VersionatorTestWithResources.bundle/Info.plist' on task: ProcessInfoPlistFile /Users/sam/Library/Developer/Xcode/DerivedData/VersionatorTest-ejghobxgggddhabfxovpkctjsdcf/Build/Products/Debug-iphoneos/VersionatorTest_VersionatorTestWithResources.bundle/Info.plist /Users/sam/Library/Developer/Xcode/DerivedData/VersionatorTest-ejghobxgggddhabfxovpkctjsdcf/Build/Intermediates.noindex/VersionatorTest.build/Debug-iphoneos/VersionatorTest_VersionatorTestWithResources.build/empty-VersionatorTest_VersionatorTestWithResources.plist (in target 'VersionatorTest_VersionatorTestWithResources' from project 'VersionatorTest')
+```
 
-I did wonder if this would be fixed by making the plugin _prebuild_ instead of _build_. That is what I initially tried to do, but unfortunately prebuild plugins seem to have a limitation in that the tool they run can only be a binaryTarget - ie a precompiled binary that's been commited/uploaded elsewhere. That's a bit of a rubbish limitation right now for such a simple plugin, and it really cramps one's style whilst developing the plugin, so I switched to using a build plugin instead. Hopefully this limitation will be fixed, and might in turn fix the Xcode problem.   
+I'm not sure if this is a bug with the Xcode integration, or if there's a recommended workaround. The best approach may be to add a local package to your Xcode project and have that use the plugin.
