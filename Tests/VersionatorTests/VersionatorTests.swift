@@ -3,8 +3,6 @@ import Runner
 import Testing
 import VersionatorUtils
 
-@testable import Runner
-
 /// Run the versionator tool over the example repo, and check that it generates the expected files,
 /// with the expected content.
 @Test func testTool() async throws {
