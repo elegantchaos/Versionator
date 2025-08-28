@@ -11,6 +11,7 @@ let package = Package(
   name: "Versionator",
   platforms: [
     .macOS(.v12)
+    // .custom("Ubuntu", versionString: "22.04"), // uncommenting this causes ActiomBuilder to create a Linux job
   ],
 
   products: [
