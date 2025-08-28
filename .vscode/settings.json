@@ -1,7 +1,13 @@
 {
-  "lldb.library": "/Applications/Xcode-16.1.0-Beta.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB",
-  "lldb.launch.expressions": "native",
-  "swift.debugger.useDebugAdapterFromToolchain": true,
+  "swift.actionAfterBuildError": "Do Nothing",
+  "swift.autoGenerateLaunchConfigurations": false,
+  "swift.sourcekit-lsp.backgroundIndexing": "auto",
+  "swift.backgroundCompilation": true,
+  "swift.showBuildStatus": "swiftStatus",
+  "[swift]": {
+    "editor.defaultFormatter": "swiftlang.swift-vscode"
+  },
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
+  "explorer.excludeGitIgnore": true,
 }
