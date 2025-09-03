@@ -7,9 +7,14 @@ private let cachedBundleURL: URL = initCachedURL()
 /// Work out the bundle URL.
 /// - Returns: The URL of the test bundle.
 ///
-/// We look for the test bundle by looking at the command line arguments.
-/// We assume that the test bundle is the first argument that contains ".xctest".
+/// We look for the test bundle in the environment first.
+/// If it's not there, we look at the command line arguments, and
+/// assume that the test bundle is the first argument that contains ".xctest".
 private func initCachedURL() -> URL {
+  if let env = ProcessInfo.processInfo.environment["XCTestBundlePath"] {
+    return URL(fileURLWithPath: env)
+  }
+
   for arg in ProcessInfo.processInfo.arguments {
     if arg.contains(".xctest") {
       if let path = arg.split(separator: ".xctest").first {
