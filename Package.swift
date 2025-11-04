@@ -5,13 +5,14 @@
 //  All code (c) 2022 - present day, Elegant Chaos Limited.
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+import Foundation
 import PackageDescription
 
 let package = Package(
   name: "Versionator",
   platforms: [
-    .macOS(.v26)
-    // .custom("Ubuntu", versionString: "22.04"), // uncommenting this causes ActiomBuilder to create a Linux job
+    .macOS(.v26),
+    .custom("Ubuntu", versionString: "22.04"),  // uncommenting this causes ActionBuilder to create a Linux job
   ],
 
   products: [
