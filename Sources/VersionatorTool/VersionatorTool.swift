@@ -4,7 +4,7 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import Foundation
-import Runner
+import Subprocess
 import VersionatorUtils
 
 @main struct VersionatorTool {
@@ -36,16 +36,22 @@ import VersionatorUtils
     let root = args[1]
     chdir(root)
 
-    let runner = Runner(command: "git")
-
     // build number is derived from the commit count on the current branch
     let buildNumber: String
-    let buildResult = runner.run(["rev-list", "--count", "HEAD"])
-    buildNumber = await buildResult.stdout.string.trimmingCharacters(in: .whitespacesAndNewlines)
+    let buildResult = try? await Subprocess.run(
+      .name("git"),
+      arguments: ["rev-list", "--count", "HEAD"],
+      output: .string(limit: 1024)
+    )
+    buildNumber = buildResult?.standardOutput?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "0"
 
     let gitVersion: String
-    let versionResult = runner.run(["describe", "--long", "--tags", "--always"])
-    gitVersion = await versionResult.stdout.string.trimmingCharacters(in: .whitespacesAndNewlines)
+    let versionResult = try? await Subprocess.run(
+      .name("git"),
+      arguments: ["describe", "--long", "--tags", "--always"],
+      output: .string(limit: 1024)
+    )
+    gitVersion = versionResult?.standardOutput?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
     let items = gitVersion.split(separator: "-")
     let tag = items.first ?? ""

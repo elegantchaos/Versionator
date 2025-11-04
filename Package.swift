@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.2
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 //  Created by Sam Deane on 09/06/22.
@@ -10,7 +10,7 @@ import PackageDescription
 let package = Package(
   name: "Versionator",
   platforms: [
-    .macOS(.v12)
+    .macOS(.v13)
     // .custom("Ubuntu", versionString: "22.04"), // uncommenting this causes ActiomBuilder to create a Linux job
   ],
 
@@ -24,7 +24,7 @@ let package = Package(
   ],
 
   dependencies: [
-    .package(url: "https://github.com/elegantchaos/Runner.git", from: "2.1.3")
+    .package(url: "https://github.com/swiftlang/swift-subprocess.git", from: "0.2.1")
   ],
 
   targets: [
@@ -42,7 +42,7 @@ let package = Package(
       name: "VersionatorTool",
       dependencies: [
         "VersionatorUtils",
-        .product(name: "Runner", package: "Runner"),
+        .product(name: "Subprocess", package: "swift-subprocess"),
       ]
     ),
 
@@ -51,7 +51,7 @@ let package = Package(
       dependencies: [
         "VersionatorTool",
         "VersionatorUtils",
-        .product(name: "Runner", package: "Runner"),
+        .product(name: "Subprocess", package: "swift-subprocess"),
       ],
       resources: [
         .copy("Resources/Example.git"),

@@ -1,22 +1,22 @@
 {
-  "originHash" : "36e1f35d487714a08809aada1b8bbfc1af23942bc5537333f5229a1e014d439c",
+  "originHash" : "5b99c393e18c6428a3cf4359d1ecaa848db2581c1fd43d4ab203f0a5e6d1c1f2",
   "pins" : [
     {
-      "identity" : "chaosbytestreams",
+      "identity" : "swift-subprocess",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/elegantchaos/ChaosByteStreams",
+      "location" : "https://github.com/swiftlang/swift-subprocess.git",
       "state" : {
-        "revision" : "dc5fc08a831e8e2878197418e3ed35f234bcfe07",
-        "version" : "1.0.6"
+        "revision" : "44922dfe46380cd354ca4b0208e717a3e92b13dd",
+        "version" : "0.2.1"
       }
     },
     {
-      "identity" : "runner",
+      "identity" : "swift-system",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/elegantchaos/Runner.git",
+      "location" : "https://github.com/apple/swift-system",
       "state" : {
-        "revision" : "e5b8e0fc4b5119b238935343dc60171c0140ee1f",
-        "version" : "2.1.3"
+        "revision" : "395a77f0aa927f0ff73941d7ac35f2b46d47c9db",
+        "version" : "1.6.3"
       }
     }
   ],
