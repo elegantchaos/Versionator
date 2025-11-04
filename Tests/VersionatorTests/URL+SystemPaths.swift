@@ -9,7 +9,7 @@ extension URL {
   /// Note that the item doesn't have to be the name of an
   /// executable, and it can contain subdirectories; it just
   /// has to be in the system path somewhere.
-  private init?(inSystemPathWithName item: String) {
+  init?(inSystemPathWithName item: String) {
     let fm = FileManager.default
     if let path = ProcessInfo.processInfo.environment["PATH"] {
       for root in path.split(separator: ":") {
@@ -31,7 +31,7 @@ extension URL {
   /// Note that the item doesn't have to be the name of an
   /// executable, and it can contain subdirectories; it just
   /// has to be in the system path somewhere.
-  private init(inSystemPathWithName item: String, fallback: String) {
+  init(inSystemPathWithName item: String, fallback: String) {
     self = URL(inSystemPathWithName: item) ?? URL(fileURLWithPath: fallback)
   }
 }

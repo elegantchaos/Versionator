@@ -1,11 +1,8 @@
 {
   "configurations": [
     {
-      "type": "swift-lldb",
+      "type": "swift",
       "request": "launch",
-      "sourceLanguages": [
-        "swift"
-      ],
       "args": [],
       "cwd": "${workspaceFolder:Versionator}",
       "name": "Debug VersionatorTool",
@@ -13,11 +10,8 @@
       "preLaunchTask": "swift: Build Debug VersionatorTool"
     },
     {
-      "type": "swift-lldb",
+      "type": "swift",
       "request": "launch",
-      "sourceLanguages": [
-        "swift"
-      ],
       "args": [],
       "cwd": "${workspaceFolder:Versionator}",
       "name": "Release VersionatorTool",

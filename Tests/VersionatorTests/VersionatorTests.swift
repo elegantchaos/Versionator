@@ -1,7 +1,13 @@
 import Foundation
-import Runner
+import Subprocess
 import Testing
 import VersionatorUtils
+
+#if canImport(System)
+  import System
+#else
+  import SystemPackage
+#endif
 
 /// Run the versionator tool over the example repo, and check that it generates the expected files,
 /// with the expected content.
@@ -21,13 +27,17 @@ import VersionatorUtils
     // run the tool over the repo
     // (note that both .h and .plisth extensions should generate C-style header files)
     let url = test.urlForTool("VersionatorTool")
-    let runner = Runner(for: url, cwd: repoFolder)
     let files = ["Version.swift", "Version.plist", "Version.h", "Info.plisth"]
     var args = ["--verbose", "./"]
     let paths = files.map { folder.appending(component: $0) }
     args.append(contentsOf: paths.map { $0.path })
-    let output = await runner.run(args)
-      .stdout.string
+    let result = try await Subprocess.run(
+      .path(FilePath(url.path)),
+      arguments: Arguments(args),
+      workingDirectory: FilePath(repoFolder.path),
+      output: .string(limit: 16384)
+    )
+    let output = result.standardOutput ?? ""
 
     // check generated files were logged to output
     #expect(output.contains("Generated Version.swift"))
