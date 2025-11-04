@@ -1,13 +1,11 @@
 {
-  "swift.actionAfterBuildError": "Do Nothing",
   "swift.autoGenerateLaunchConfigurations": false,
   "swift.sourcekit-lsp.backgroundIndexing": "auto",
   "swift.backgroundCompilation": true,
-  "swift.showBuildStatus": "swiftStatus",
+  "swift.diagnosticsCollection": "keepSourceKit",
   "[swift]": {
     "editor.defaultFormatter": "swiftlang.swift-vscode"
   },
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
-  "explorer.excludeGitIgnore": true,
 }
