@@ -18,17 +18,17 @@
 
 This plugin gathers version information and embeds it into the package/executable, in a way that allows it to be retrieved at runtime.
 
-We actually generate a few files:
+We generate a few files:
 
-- a `Version.swift` file which then gets built into the package
-- an `Info.plist` file which gets embedded as a package resource
-- a `Info.plisth` a C-style header file, with a non-standard extension so that is bundled into the resources
+- a `Version.generated.swift` file which then gets built into the package
+- if the target has resources, an `Info.plist` file which gets embedded as a package resource
+- if the target has resources, an `Info.plisth` C-style header file, with a non-standard extension so that it is bundled into the resources
 
 See https://github.com/elegantchaos/VersionatorTest for an example command line tool which uses the plugin.
 
 ## Swift API
 
-The generated Swift API defines a `CurrentVersion` struct, with some static properties:
+The generated Swift API defines a `VersionatorVersion` struct, with some static properties:
 
 ```swift
 public struct VersionatorVersion {
@@ -50,7 +50,7 @@ Currently I'm just returning it verbatim, but the plugin could be extended to pa
 
 ## Info.plist
 
-This plugin also generates an `Info.plist`, which gets bundled into the package resources.
+If the target has resources, the plugin also generates an `Info.plist`, which gets bundled into the package resources.
 
 This can then be accessed with `Bundle.module.infoDictionary`.
 
@@ -70,7 +70,7 @@ This file defines some variables:
 #define GIT_TAG "v1.0.0"
 ```
 
-You can then substitute these into your `Info.plist` definitions, using the normal synax - e.g: `${GIT_VERSION}`.
+You can then substitute these into your `Info.plist` definitions, using the normal syntax - e.g: `${GIT_VERSION}`.
 
 _Note that we use a non-standard file extension here to avoid Swift Package Manager getting confused. Generating a `.h` file will cause SPM to treat the package as being mixed Swift/C, which is not allowed in this context._
 
